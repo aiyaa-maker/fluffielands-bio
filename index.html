@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluffielands - ร้านฟลัฟฟี่ สติกเกอร์ไลน์ยินดีต้อนรับ</title>
+    
+    <!-- Google Fonts : Mitr -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Mitr', 'sans-serif'],
+                    },
+                    colors: {
+                        aqua: {
+                            light: '#E8F9FC',
+                            DEFAULT: '#C7F0F6', /* Pastel Aqua */
+                            dark: '#A3E2EC'
+                        },
+                        cream: {
+                            DEFAULT: '#FCFAFD', /* Cream White */
+                            dark: '#F3ECF6'
+                        },
+                        cotton: {
+                            DEFAULT: '#FBECDC', /* Cotton Pink */
+                            dark: '#F5D7BC'
+                        },
+                        blush: {
+                            light: '#DFBFC1',
+                            DEFAULT: '#C9A7A9', /* Blush Pink */
+                            dark: '#AA8284'
+                        },
+                        sunny: {
+                            light: '#FFBC75',
+                            DEFAULT: '#FFA64D', /* Sunny Orange */
+                            dark: '#E68A30'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(201, 167, 169, 0.25)',
+                        'card': '0 10px 25px -5px rgba(199, 240, 246, 0.4)',
+                        'pill': '0 4px 12px rgba(255, 166, 77, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #C7F0F6;
+            color: #AA8284;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #C7F0F6; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C9A7A9; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FFA64D; 
+        }
+
+        /* Float Animations for decorations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-12px) rotate(4deg);
+            }
+        }
+        @keyframes float-reverse {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(12px) rotate(-6deg);
+            }
+        }
+        @keyframes float-slow {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+            }
+            50% {
+                transform: translateY(-6px) scale(1.03);
+            }
+        }
+        
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: float 4s ease-in-out 2s infinite;
+        }
+        .animate-float-reverse {
+            animation: float-reverse 5s ease-in-out 1s infinite;
+        }
+        .animate-float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+        }
+
+        /* Smooth Toast Transition */
+        #toastNotification {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-blush selection:text-white relative font-sans">
+
+    <!-- Custom Theme SVGs -->
+    <svg width="0" height="0" class="hidden absolute pointer-events-none" aria-hidden="true">
+        <!-- ตุ๊กตาหมีสีบลัชพิ้งก์ -->
+        <symbol id="icon-teddy" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="6" cy="7" r="3.5" />
+            <circle cx="6" cy="7" r="1.5" fill="#FCFAFD" />
+            <circle cx="18" cy="7" r="3.5" />
+            <circle cx="18" cy="7" r="1.5" fill="#FCFAFD" />
+            <path d="M12 6C7 6 4 10 4 15C4 20 7 22.5 12 22.5C17 22.5 20 20 20 15C20 10 17 6 12 6Z" />
+            <circle cx="8.5" cy="12" r="1.2" fill="#FCFAFD" />
+            <circle cx="15.5" cy="12" r="1.2" fill="#FCFAFD" />
+            <ellipse cx="12" cy="16.5" rx="4" ry="3" fill="#FCFAFD" />
+            <ellipse cx="12" cy="15" rx="1.5" ry="1" fill="#C9A7A9" />
+            <path d="M12 16v1.5M10.5 18c.5.5 2.5.5 3 0" stroke="#C9A7A9" stroke-width="1.2" fill="none" stroke-linecap="round" />
+        </symbol>
+        
+        <!-- กระดุมพาสเทล -->
+        <symbol id="icon-button" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" fill="#FBECDC" />
+            <circle cx="50" cy="50" r="42" fill="#FCFAFD" />
+            <circle cx="50" cy="50" r="28" fill="#E8F9FC" />
+            <circle cx="50" cy="50" r="28" fill="none" stroke="#C7F0F6" stroke-width="2" />
+            <circle cx="40" cy="40" r="5.5" fill="#FFA64D" />
+            <circle cx="60" cy="40" r="5.5" fill="#FFA64D" />
+            <circle cx="40" cy="60" r="5.5" fill="#FFA64D" />
+            <circle cx="60" cy="60" r="5.5" fill="#FFA64D" />
+            <path d="M38 39 L62 63 M62 39 L38 63" stroke="#C9A7A9" stroke-width="8" stroke-linecap="round"/>
+            <path d="M38 38 L62 62 M62 38 L38 62" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+        </symbol>
+
+        <!-- หัวใจ -->
+        <symbol id="icon-heart-cute" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </symbol>
+
+        <!-- ดาววิ้งๆ -->
+        <symbol id="icon-sparkle-star" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+        </symbol>
+
+        <!-- Official Instagram Icon -->
+        <symbol id="icon-instagram-official" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </symbol>
+
+        <!-- Official X (Twitter) Icon -->
+        <symbol id="icon-x-official" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </symbol>
+    </svg>
+
+    <!-- Main Container -->
+    <div class="max-w-md mx-auto min-h-screen bg-cream shadow-2xl relative overflow-hidden my-0 sm:my-4 sm:rounded-[40px] border-0 sm:border-8 border-white">
+        
+        <!-- ================= BACKGROUND DECORATIONS ================= -->
+        <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-60" aria-hidden="true">
+            <svg class="absolute top-[2%] left-[8%] w-10 h-10 text-sunny animate-float opacity-40" viewBox="0 0 24 24"><use href="#icon-teddy"></use></svg>
+            <svg class="absolute top-[6%] right-[10%] w-9 h-9 animate-float-delayed opacity-70" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+            <svg class="absolute top-[12%] left-[28%] w-6 h-6 text-blush opacity-40 animate-float-reverse" viewBox="0 0 24 24"><use href="#icon-heart-cute"></use></svg>
+            <svg class="absolute top-[18%] right-[6%] w-12 h-12 text-blush-dark animate-float opacity-20" viewBox="0 0 24 24"><use href="#icon-teddy"></use></svg>
+            <svg class="absolute top-[25%] left-[5%] w-10 h-10 animate-float-delayed opacity-60" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+            <svg class="absolute top-[35%] left-[50%] w-7 h-7 text-sunny opacity-50 animate-float-reverse" viewBox="0 0 24 24"><use href="#icon-heart-cute"></use></svg>
+            <svg class="absolute top-[42%] left-[4%] w-11 h-11 text-blush animate-float opacity-30" viewBox="0 0 24 24"><use href="#icon-teddy"></use></svg>
+            <svg class="absolute top-[49%] right-[8%] w-10 h-10 animate-float-delayed opacity-70" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+            <svg class="absolute top-[62%] right-[6%] w-12 h-12 text-sunny animate-float-slow opacity-25" viewBox="0 0 24 24"><use href="#icon-teddy"></use></svg>
+            <svg class="absolute top-[71%] left-[10%] w-8 h-8 animate-float-reverse opacity-60" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+            <svg class="absolute top-[82%] left-[6%] w-11 h-11 text-blush animate-float-delayed opacity-30" viewBox="0 0 24 24"><use href="#icon-teddy"></use></svg>
+            <svg class="absolute top-[88%] right-[20%] w-6 h-6 text-sunny opacity-50 animate-float" viewBox="0 0 24 24"><use href="#icon-heart-cute"></use></svg>
+            <svg class="absolute top-[95%] right-[8%] w-12 h-12 animate-float-reverse opacity-70" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+        </div>
+
+        <!-- Header / Hero Section -->
+        <header class="bg-gradient-to-b from-aqua via-aqua/70 to-cream pt-10 pb-8 px-6 relative rounded-b-[45px] shadow-sm z-10 border-b-4 border-white text-center overflow-hidden">
+            
+            <!-- Floating Top Badges -->
+            <div class="flex justify-between items-center mb-4">
+                <span class="bg-white/80 text-blush-dark text-[11px] font-medium px-3 py-1 rounded-full border border-aqua shadow-sm flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3.5 h-3.5 text-sunny"></i> OPEN DAILY : 09.00 - 23.00
+                </span>
+                <span class="bg-cotton text-blush-dark text-[11px] font-medium px-3 py-1 rounded-full border border-white shadow-sm flex items-center gap-1">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-sunny"></i> ไทย - ต่างประเทศ
+                </span>
+            </div>
+
+            <!-- Profile Image / Banner -->
+            <div class="relative inline-block mb-4 group">
+                <svg class="absolute -top-3 -left-3 w-10 h-10 opacity-80 -rotate-12 z-0" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+                <svg class="absolute -bottom-2 -right-2 w-8 h-8 text-sunny z-20 animate-bounce" viewBox="0 0 24 24"><use href="#icon-sparkle-star"></use></svg>
+
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl border-4 border-white shadow-lg overflow-hidden bg-white mx-auto relative z-10">
+                    <img src="https://i.postimg.cc/Tw8cFgmv/line-oa-chat-260724-203610.jpg" alt="@fluffielands Logo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Title & Bio -->
+            <div class="space-y-2 relative z-10">
+                <h1 class="text-2xl font-bold text-blush-dark flex items-center justify-center gap-2">
+                    @fluffielands
+                    <i data-lucide="heart" class="w-5 h-5 text-sunny fill-sunny"></i>
+                </h1>
+                <p class="text-sm font-semibold text-blush-dark bg-white/90 inline-block px-4 py-1.5 rounded-2xl shadow-sm border border-aqua/60">
+                    ร้านฟลัฟฟี่ สติกเกอร์ไลน์ยินดีต้อนรับ ✨
+                </p>
+                
+                <p class="text-xs text-blush-dark/90 leading-relaxed font-medium pt-1">
+                    สติกเกอร์ | ธีม | อิโมจิไลน์ | ไลน์เมโลดี้<br>
+                    ส่งไว ได้ของแท้ 100% บริการด้วยใจค่ะ 💖
+                </p>
+            </div>
+
+            <!-- CTA Button : คลิกเพื่อสอบถาม-สั่งซื้อ -->
+            <div class="mt-6 relative z-10">
+                <a href="https://lin.ee/TG9fS7n" target="_blank" rel="noopener noreferrer" class="w-full bg-gradient-to-r from-sunny to-sunny-dark text-white font-semibold py-3.5 px-6 rounded-2xl shadow-pill hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 border-2 border-white text-base">
+                    <i data-lucide="message-circle-heart" class="w-5 h-5"></i>
+                    คลิกเพื่อสอบถาม - สั่งซื้อ
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Content Section -->
+        <main class="px-5 py-6 space-y-8 relative z-10">
+
+            <!-- ================= PAYMENT SECTION ================= -->
+            <section class="bg-white rounded-3xl p-5 shadow-card border-2 border-aqua relative overflow-hidden">
+                <svg class="absolute -right-3 -top-3 w-12 h-12 opacity-40 rotate-12 pointer-events-none" viewBox="0 0 100 100"><use href="#icon-button"></use></svg>
+                
+                <div class="flex items-center gap-2 border-b-2 border-aqua/50 pb-3 mb-4">
+                    <div class="w-8 h-8 rounded-full bg-cotton flex items-center justify-center text-sunny shrink-0">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-base text-blush-dark">ช่องทางการชำระเงิน ꒰💌꒱</h2>
+                    </div>
+                </div>
+
+                <!-- Main QR Image Section (ภาพหลักรวมช่องทางชำระเงิน) -->
+                <div class="mb-5 text-center">
+                    <div class="bg-cream rounded-2xl p-2.5 border-2 border-aqua shadow-sm inline-block w-full overflow-hidden">
+                        <img src="https://i.postimg.cc/5yg1vSMS/1785160478650-(1).png" alt="Payment QR Code Fluffielands" class="w-full h-auto rounded-xl object-contain mx-auto">
+                    </div>
+                    <!-- ปุ่มบันทึกรูป QR Code หลัก -->
+                    <button onclick="downloadImage(event, 'https://i.postimg.cc/5yg1vSMS/1785160478650-(1).png', 'Fluffielands_Payment_QR.png')" class="mt-3 w-full bg-gradient-to-r from-sunny to-sunny-dark text-white font-bold py-2.5 px-4 rounded-xl shadow-md hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2 text-xs">
+                        <i data-lucide="download" class="w-4 h-4"></i>
+                        บันทึกรูป QR Code ชำระเงินลงเครื่อง
+                    </button>
+                </div>
+
+                <!-- Account Holder -->
+                <div class="bg-aqua/30 rounded-2xl p-3 mb-4 text-center border border-aqua">
+                    <span class="text-xs text-blush-dark font-medium block">🏦 ชื่อบัญชี</span>
+                    <span class="text-base font-bold text-blush-dark">กชกร เอี่ยมเงิน</span>
+                </div>
+
+                <!-- Account List Copyable (Soft Pastel Backgrounds) -->
+                <div class="space-y-3">
+                    <!-- Kasikorn (Soft Emerald Tint) -->
+                    <div class="bg-emerald-50/80 rounded-2xl p-3 border border-emerald-200/80 flex items-center justify-between shadow-sm hover:border-emerald-300 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white font-black flex items-center justify-center text-[10px] tracking-tighter shrink-0 shadow-sm border border-emerald-400">
+                                KBANK
+                            </div>
+                            <div>
+                                <span class="text-[11px] text-blush-dark/80 font-medium block">กสิกรไทย (K-Bank)</span>
+                                <span class="text-base font-bold text-blush-dark tracking-wider">1171456149</span>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard(event, '1171456149')" class="bg-white/90 border border-emerald-200 hover:bg-emerald-500 hover:text-white active:scale-95 text-emerald-800 text-xs font-medium px-3 py-2 rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> คัดลอก
+                        </button>
+                    </div>
+
+                    <!-- PromptPay (Soft Sky/Blue Tint) -->
+                    <div class="bg-sky-50/80 rounded-2xl p-3 border border-sky-200/80 flex items-center justify-between shadow-sm hover:border-sky-300 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-sky-600 text-white font-black flex items-center justify-center text-[11px] tracking-tighter shrink-0 shadow-sm border border-sky-500">
+                                PP
+                            </div>
+                            <div>
+                                <span class="text-[11px] text-blush-dark/80 font-medium block">พร้อมเพย์ (PromptPay)</span>
+                                <span class="text-base font-bold text-blush-dark tracking-wider">0646940573</span>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard(event, '0646940573')" class="bg-white/90 border border-sky-200 hover:bg-sky-600 hover:text-white active:scale-95 text-sky-800 text-xs font-medium px-3 py-2 rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> คัดลอก
+                        </button>
+                    </div>
+
+                    <!-- TrueWallet (Soft Amber/Orange Tint) -->
+                    <div class="bg-amber-50/80 rounded-2xl p-3 border border-amber-200/80 flex items-center justify-between shadow-sm hover:border-amber-300 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500 text-white font-black flex items-center justify-center text-[11px] tracking-tighter shrink-0 shadow-sm border border-amber-400">
+                                TW
+                            </div>
+                            <div>
+                                <span class="text-[11px] text-blush-dark/80 font-medium block">ทรูวอลเล็ต (TrueWallet)</span>
+                                <span class="text-base font-bold text-blush-dark tracking-wider">0996121239</span>
+                            </div>
+                        </div>
+                        <button onclick="copyToClipboard(event, '0996121239')" class="bg-white/90 border border-amber-200 hover:bg-amber-500 hover:text-white active:scale-95 text-amber-800 text-xs font-medium px-3 py-2 rounded-xl transition-all shadow-sm flex items-center gap-1.5 shrink-0">
+                            <i data-lucide="copy" class="w-3.5 h-3.5"></i> คัดลอก
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Payment Rules Warning -->
+                <div class="mt-4 bg-cotton/60 border border-sunny/40 rounded-2xl p-3.5 text-[11px] text-blush-dark space-y-1.5">
+                    <p class="font-bold text-sunny-dark flex items-center gap-1">
+                        <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i> โปรดตรวจสอบเลขบัญชีให้ถูกต้อง
+                    </p>
+                    <p class="leading-relaxed">
+                        หากโอนผิดเลข/บัญชีทางร้าน<span class="font-bold text-rose-500">ไม่รับผิดชอบโอนคืนทุกกรณี</span>
+                    </p>
+                    <hr class="border-sunny/20 my-2">
+                    <ul class="space-y-1 text-[11px]">
+                        <li class="flex items-start gap-1"><span class="text-sunny font-bold">★</span> <span>โอนเงินแล้วแจ้งสลิปได้เลยค่ะ</span></li>
+                        <li class="flex items-start gap-1"><span class="text-sunny font-bold">★</span> <span>แจ้งไอดีไลน์ / คิวอาร์โค้ดของผู้รับทุกครั้ง</span></li>
+                        <li class="flex items-start gap-1"><span class="text-sunny font-bold">★</span> <span>หากต้องการแชร์ผู้ติดต่อ รบกวนแจ้งแอดมินก่อนทุกครั้ง</span></li>
+                    </ul>
+                </div>
+            </section>
+
+
+            <!-- ================= SECTION : PRICE LIST ================= -->
+            <section class="bg-white rounded-3xl p-5 shadow-card border-2 border-cotton relative">
+                <div class="flex items-center gap-2 border-b-2 border-cotton pb-3 mb-4">
+                    <div>
+                        <h2 class="font-bold text-base text-blush-dark flex items-center gap-1.5">
+                            เรทสติกเกอร์ไทย - ต่างประเทศ
+                            <i data-lucide="coins" class="w-4 h-4 text-sunny"></i>
+                        </h2>
+                        <p class="text-[11px] text-blush-dark/80">ราคาเหรียญ (LINE COINS) ไทย-ต่างประเทศ ราคาเดียว</p>
+                    </div>
+                </div>
+
+                <!-- Price Table Grid (8 Small Boxes: 10, 50, 70, 85, 100, 120, 150, 250) -->
+                <div class="grid grid-cols-2 gap-2.5 mb-4">
+                    <!-- Box 1 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">10©</span>
+                        <span class="text-lg font-bold text-sunny">8฿</span>
+                    </div>
+                    <!-- Box 2 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">50©</span>
+                        <span class="text-lg font-bold text-sunny">25฿</span>
+                    </div>
+                    <!-- Box 3 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">70©</span>
+                        <span class="text-lg font-bold text-sunny">35฿</span>
+                    </div>
+                    <!-- Box 4 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">85©</span>
+                        <span class="text-lg font-bold text-sunny">45฿</span>
+                    </div>
+                    <!-- Box 5 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">100©</span>
+                        <span class="text-lg font-bold text-sunny">50฿</span>
+                    </div>
+                    <!-- Box 6 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">120©</span>
+                        <span class="text-lg font-bold text-sunny">60฿</span>
+                    </div>
+                    <!-- Box 7 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">150©</span>
+                        <span class="text-lg font-bold text-sunny">75฿</span>
+                    </div>
+                    <!-- Box 8 -->
+                    <div class="bg-cream border border-aqua/70 rounded-2xl p-3 text-center hover:bg-aqua/20 transition-colors">
+                        <span class="text-xs text-blush-dark/80 font-medium block">250©</span>
+                        <span class="text-lg font-bold text-sunny">125฿</span>
+                    </div>
+                </div>
+
+                <!-- Highlight Price : LINE MELODY -->
+                <div class="space-y-2 mb-5">
+                    <div class="bg-gradient-to-r from-aqua/40 to-cream border border-aqua rounded-2xl p-3 flex justify-between items-center px-4">
+                        <span class="text-sm font-semibold text-blush-dark flex items-center gap-1.5">
+                            🎵 Line Melody 85©
+                        </span>
+                        <span class="text-xl font-bold text-sunny">45฿</span>
+                    </div>
+                </div>
+
+                <!-- Secret VIP Group Banner -->
+                <div class="bg-gradient-to-r from-sunny/20 via-cotton to-aqua/30 border-2 border-sunny rounded-2xl p-4 text-center relative overflow-hidden shadow-sm">
+                    <div class="inline-block bg-sunny text-white text-[10px] font-bold px-3 py-0.5 rounded-full mb-1">
+                        SPECIAL GROUP
+                    </div>
+                    <h3 class="font-bold text-sm text-blush-dark mb-1">กลุ่มโปรลับ เข้าฟรี! สินค้าโปรเริ่มต้น 8฿</h3>
+                    <p class="text-[11px] text-blush-dark/90 mb-3">(ADD LINE เพื่อขอรหัสจากแอดมิน)</p>
+                    <a href="https://lin.ee/TG9fS7n" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1.5 bg-white text-sunny-dark border border-sunny font-bold text-xs py-2 px-5 rounded-full hover:bg-sunny hover:text-white active:scale-95 transition-all shadow-sm">
+                        <i data-lucide="user-plus" class="w-3.5 h-3.5"></i> ขอรหัสเข้ากลุ่มโปรลับ
+                    </a>
+                </div>
+            </section>
+
+
+            <!-- ================= SECTION : HOW TO ORDER ================= -->
+            <section class="bg-white rounded-3xl p-5 shadow-card border-2 border-aqua relative">
+                <div class="flex items-center gap-2 border-b-2 border-aqua pb-3 mb-4">
+                    <div>
+                        <h2 class="font-bold text-base text-blush-dark">วิธีการสั่งซื้อสินค้าไทย-ต่างประเทศ</h2>
+                        <p class="text-[11px] text-blush-dark/80">ขั้นตอนการสั่งซื้อง่ายๆ ในไม่กี่สเต็ป</p>
+                    </div>
+                </div>
+
+                <!-- Subtab 1 : THAILAND -->
+                <div class="mb-6 bg-cream rounded-2xl p-4 border border-aqua/60 relative">
+                    <span class="inline-block bg-aqua text-blush-dark text-xs font-bold px-3 py-1 rounded-full mb-3 shadow-sm">
+                        🇹🇭 วิธีการสั่งซื้อสินค้าไทย
+                    </span>
+                    
+                    <ol class="space-y-3 text-xs text-blush-dark">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-blush/40 text-blush font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">เลือกสินค้า :</span> เลือก Sticker / Theme / Emoji / Melody ที่ต้องการ
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-blush/40 text-blush font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">ส่งรูปหรือลิงก์ :</span> ส่งรูป หรือ คัดลอกลิงก์ลายที่ต้องการ
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-blush/40 text-blush font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">แจ้งข้อมูลผู้รับ :</span> แจ้ง LINE ID / QR Code / เบอร์โทรศัพท์ของผู้รับ <span class="text-sunny-dark">(ค้นหาทางเบอร์รบกวนแจ้งด้วยนะคะ)</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-blush/40 text-blush font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">ชำระเงิน :</span> ชำระเงินเรียบร้อยแล้ว รอรับสินค้าได้เลย
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Subtab 2 : INTERNATIONAL -->
+                <div class="bg-cream rounded-2xl p-4 border border-cotton relative">
+                    <span class="inline-block bg-cotton text-blush-dark text-xs font-bold px-3 py-1 rounded-full mb-3 shadow-sm">
+                        🌐 วิธีการสั่งซื้อสินค้าต่างประเทศ
+                    </span>
+                    
+                    <ol class="space-y-3 text-xs text-blush-dark mb-4">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-sunny/40 text-sunny font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">ค้นหาเว็บไซต์ :</span> ค้นหาคำว่า yabeline บนหน้าเว็บไซต์ที่สะดวก
+                                <a href="https://yabeline.tw/" target="_blank" rel="noopener noreferrer" class="mt-2 block bg-white border-2 border-sunny text-sunny-dark text-center py-2 px-3 rounded-xl font-bold hover:bg-sunny hover:text-white active:scale-95 transition-all shadow-sm">
+                                    🌐 เว็บดูสินค้าต่างประเทศ CLICK (yabeline.tw)
+                                </a>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-sunny/40 text-sunny font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">เลือกสินค้า :</span> เลือกประเภทสินค้า และเลือกลายที่ต้องการ
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-sunny/40 text-sunny font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">แชร์ลิงก์ :</span> กดคัดลอกหรือแชร์ลิงก์ลายที่ต้องการสั่งซื้อ
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-sunny/40 text-sunny font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">แจ้งข้อมูลผู้รับ :</span> แจ้งข้อมูลผู้รับ (LINE ID หรือ QR Code)
+                                <span class="block text-rose-500 font-bold mt-0.5">❌ งดแชร์ผู้ติดต่อหรือค้นหาทางเบอร์โทร ❌</span>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-5 h-5 rounded-full bg-white border border-sunny/40 text-sunny font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5 shadow-sm">•</span>
+                            <div>
+                                <span class="font-bold">ชำระเงิน :</span> ชำระเงินเรียบร้อยแล้ว รอรับสินค้าได้เลย
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+
+            <!-- ================= SECTION : FAQ / GIFTS ================= -->
+            <section class="bg-white rounded-3xl p-5 shadow-card border-2 border-cotton relative">
+                <div class="flex items-center gap-2 border-b-2 border-cotton pb-3 mb-4">
+                    <div>
+                        <h2 class="font-bold text-base text-blush-dark">วิธีดูสินค้าหากไม่ได้รับของขวัญทำยังไง?</h2>
+                        <p class="text-[11px] text-blush-dark/80">แก้ไขปัญหาของขวัญไม่เด้งแจ้งเตือนง่ายๆ</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-aqua/30 via-cream to-cotton/30 border border-aqua rounded-2xl p-4 space-y-3">
+                    <h3 class="font-bold text-xs text-blush-dark flex items-center gap-1.5">
+                        🎁 หากหาของขวัญไม่เจอทำอย่างไร?
+                    </h3>
+                    <ol class="space-y-2 text-xs text-blush-dark">
+                        <li class="flex items-start gap-2">
+                            <span class="bg-white text-sunny font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5 border border-sunny/40">•</span>
+                            <span>กดไปที่ <span class="font-bold text-sunny-dark">การตั้งค่า LINE (Settings)</span></span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="bg-white text-sunny font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5 border border-sunny/40">•</span>
+                            <span>เลือก <span class="font-bold text-sunny-dark">หมวดสินค้าที่สั่งไปแล้วไม่ได้รับ</span> (สติกเกอร์ / ธีม / เมโลดี้)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="bg-white text-sunny font-bold w-4 h-4 rounded-full flex items-center justify-center text-[10px] shrink-0 mt-0.5 border border-sunny/40">•</span>
+                            <span>กดไปที่ <span class="font-bold text-sunny-dark">กล่องของขวัญ</span> แล้วกด <span class="font-bold text-sunny-dark">ดาวน์โหลด (Download)</span></span>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+
+            <!-- ================= SECTION : SOCIAL FOLLOW ================= -->
+            <section class="bg-white rounded-3xl p-5 shadow-card border-2 border-aqua relative">
+                <div class="flex items-center gap-2 border-b-2 border-aqua pb-3 mb-4">
+                    <div>
+                        <h2 class="font-bold text-base text-blush-dark">ช่องทางการติดตามร้าน</h2>
+                        <p class="text-[11px] text-blush-dark/80">ติดตามข่าวสารและโปรโมชันอัปเดตใหม่ๆ ได้เลย</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Instagram Official App Style -->
+                    <a href="https://www.instagram.com/fluffielands?" target="_blank" rel="noopener noreferrer" class="bg-cream hover:bg-cotton/50 border border-blush/40 rounded-2xl p-3.5 text-center transition-all shadow-sm hover:-translate-y-1 block group">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 text-white mx-auto flex items-center justify-center mb-2 shadow-md">
+                            <svg class="w-6 h-6"><use href="#icon-instagram-official"></use></svg>
+                        </div>
+                        <span class="font-bold text-xs text-blush-dark block">Instagram</span>
+                        <span class="text-[11px] text-sunny-dark font-medium block">@fluffielands</span>
+                    </a>
+
+                    <!-- X (Twitter) Official App Style -->
+                    <a href="https://x.com/fluffielands?s=11&t=8LGXIshdPo72RJ3kDvNwrA" target="_blank" rel="noopener noreferrer" class="bg-cream hover:bg-aqua/50 border border-aqua rounded-2xl p-3.5 text-center transition-all shadow-sm hover:-translate-y-1 block group">
+                        <div class="w-11 h-11 rounded-2xl bg-black text-white mx-auto flex items-center justify-center mb-2 shadow-md">
+                            <svg class="w-5 h-5"><use href="#icon-x-official"></use></svg>
+                        </div>
+                        <span class="font-bold text-xs text-blush-dark block">X (Twitter)</span>
+                        <span class="text-[11px] text-sunny-dark font-medium block">@fluffielands</span>
+                    </a>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer / Contact -->
+        <footer class="bg-gradient-to-t from-aqua via-cream to-cream pt-8 pb-10 px-6 rounded-t-[40px] text-center mt-4 relative z-10 border-t-2 border-white shadow-lg">
+            
+            <h2 class="text-xs font-bold mb-4 tracking-wider text-blush-dark flex items-center justify-center gap-1.5 uppercase">
+               FLUFFIELANDS STICKER LINE <i data-lucide="heart" class="w-3.5 h-3.5 text-sunny fill-sunny"></i>
+            </h2>
+            
+            <div class="flex flex-col items-center gap-2.5 mb-6">
+                <a href="https://lin.ee/TG9fS7n" target="_blank" rel="noopener noreferrer" class="w-full max-w-[260px] bg-sunny text-white py-3 rounded-full text-xs font-bold tracking-wider hover:scale-105 transition-transform shadow-pill flex justify-center items-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> สั่งซื้อผ่าน LINE OA
+                </a>
+            </div>
+            
+            <p class="text-xs font-medium text-blush-dark/80 flex items-center justify-center gap-1 italic">
+                ขอบคุณที่อุดหนุนร้านฟลัฟฟี่นะคะ <i data-lucide="star" class="w-3.5 h-3.5 text-sunny fill-sunny"></i>
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification แจ้งเมื่อคัดลอกหรือดาวน์โหลดสำเร็จ -->
+    <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] bg-blush-dark text-white text-xs px-4 py-2.5 rounded-full shadow-lg border border-white transition-all duration-300 opacity-0 pointer-events-none flex items-center gap-2 transform translate-y-2">
+        <i data-lucide="check-circle" class="w-4 h-4 text-cotton"></i>
+        <span id="toastText">คัดลอกเรียบร้อยแล้ว! 💕</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+
+        let toastTimeout;
+        function triggerToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastText = document.getElementById('toastText');
+            
+            toastText.innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+            }, 2500);
+        }
+
+        // Copy Clipboard Function with Fallback
+        function copyToClipboard(event, text) {
+            if (event) event.stopPropagation();
+            
+            const showToast = () => triggerToast('คัดลอกเรียบร้อยแล้ว! 💕');
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(showToast).catch(err => {
+                    fallbackCopy(text, showToast);
+                });
+            } else {
+                fallbackCopy(text, showToast);
+            }
+        }
+
+        function fallbackCopy(text, callback) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                callback();
+            } catch (err) {
+                console.error('คัดลอกไม่สำเร็จ :', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Direct Download Image Function
+        function downloadImage(event, imageUrl, fileName) {
+            if (event) event.preventDefault();
+            triggerToast('กำลังบันทึกรูปภาพ... 📥');
+
+            fetch(imageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(blobUrl);
+                    triggerToast('บันทึกรูปภาพเรียบร้อยแล้ว! ✨');
+                })
+                .catch(err => {
+                    console.error('Download error:', err);
+                    // Fallback หากโดน CORS บล็อก ให้เปิดรูปภาพในแท็บใหม่แทน
+                    window.open(imageUrl, '_blank');
+                    triggerToast('เปิดรูปภาพในแท็บใหม่แล้ว สามารถกดค้างเพื่อบันทึกได้ค่ะ');
+                });
+        }
+    </script>
+</body>
+</html>
